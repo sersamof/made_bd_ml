@@ -1,0 +1,26 @@
+1. hdfs dfs -mkdir /new_dir
+2. hdfs dfs -mkdir /new_dir/go_deeper
+3. При "удалении" файла, он переименовывается с добавлением префикса /trash. 
+По истечении некоторого времени файл физически удаляется (неймнода удаляет запись о нем, блоки освобождаются). Покуда файл не удален окончательно, есть возможность его восстановить
+hdfs dfs -rm -skipTrash
+4. hdfs dfs -touchz /new_dir/go_deeper/emptyfile
+5. hdfs dfs -rm /new_dir/go_deeper/emptyfile
+6. hdfs dfs -rm -r /new_dir
+
+1. hdfs dfs -mkdir /newdir && hdfs dfs -put newfile /newdir/newfile
+2. hdfs dfs -cat /newdir/newfile
+3. hdfs dfs -tail /newdir/newfile
+4. hdfs dfs -cat /newdir/newfile | head -5
+6. hdfs dfs -cp /newdir/newfile /newdir/newfile2
+
+1. 3->1 
+time hdfs dfs -setrep -w 1 /newdir/newfile
+0m11.870s
+
+1->3
+time hdfs dfs -setrep -w 3 /newdir/newfile
+0m11.984s
+2. hdfs fsck /newdir/newfile -files -blocks -locations
+   BP-827210112-172.18.0.6-1633972476573:blk_1073741831_1007 len=5 Live_repl=3  [DatanodeInfoWithStorage[172.18.0.3:9866,DS-b4150cc3-c6c6-4933-842f-6a3943630826,DISK], DatanodeInfoWithStorage[172.18.0.2:9866,DS-016ded3e-ca0e-4a1a-8f8d-0af1de232faa,DISK], DatanodeInfoWithStorage[172.18.0.5:9866,DS-d9e99ec6-c48c-4807-98ee-14332ca85327,DISK]]
+....
+3. hdfs fsck -blockId blk_1073741831
