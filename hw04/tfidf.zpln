@@ -1,0 +1,545 @@
+﻿{
+  "paragraphs": [
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637963265079_1952596895",
+      "id": "paragraph_1637963265079_1952596895",
+      "dateCreated": "2021-11-26T21:47:45+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:428",
+      "text": "spark",
+      "dateUpdated": "2021-11-26T23:29:38+0000",
+      "dateFinished": "2021-11-26T23:29:49+0000",
+      "dateStarted": "2021-11-26T23:29:38+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mres1\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@39d594e1\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637963267270_263378250",
+      "id": "paragraph_1637963267270_263378250",
+      "dateCreated": "2021-11-26T21:47:47+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:501",
+      "text": "import org.apache.spark.sql._\n\nval spark = SparkSession.builder()\n    .master(\"local[*]\")\n    .appName(\"made-tfidf\")\n    .getOrCreate()",
+      "dateUpdated": "2021-11-26T23:29:41+0000",
+      "dateFinished": "2021-11-26T23:29:50+0000",
+      "dateStarted": "2021-11-26T23:29:41+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "import org.apache.spark.sql._\n\u001b[1m\u001b[34mspark\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.SparkSession\u001b[0m = org.apache.spark.sql.SparkSession@39d594e1\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=0",
+              "$$hashKey": "object:5461"
+            },
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=1",
+              "$$hashKey": "object:5462"
+            },
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=2",
+              "$$hashKey": "object:5463"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637963288754_475212742",
+      "id": "paragraph_1637963288754_475212742",
+      "dateCreated": "2021-11-26T21:48:08+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:689",
+      "text": "val rawDf = spark.read\n    .option(\"header\", \"true\")\n    .option(\"inferSchema\", \"true\")\n    .option(\"sep\", \",\")\n    .csv(\"/notebook/tripadvisor_hotel_reviews.csv\")\nval reviewCol = \"Review\"\nval processedDf = rawDf\n            .withColumn(reviewCol, lower(col(reviewCol)))\n            .withColumn(\"doc_id\", monotonically_increasing_id())\n            .withColumn(reviewCol, regexp_replace(col(reviewCol), \"[^a-z0-9 ]\", \"\")) // оставим латиницу и цифры\n            .withColumn(reviewCol, regexp_replace(col(reviewCol), \"\\\\s+\", \" \"))\n            .withColumn(reviewCol, trim(col(reviewCol)))\nprocessedDf.show",
+      "dateUpdated": "2021-11-26T23:29:42+0000",
+      "dateFinished": "2021-11-26T23:29:53+0000",
+      "dateStarted": "2021-11-26T23:29:49+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+------+------+\n|              Review|Rating|doc_id|\n+--------------------+------+------+\n|nice hotel expens...|     4|     0|\n|ok nothing specia...|     2|     1|\n|nice rooms not 4 ...|     3|     2|\n|unique great stay...|     5|     3|\n|great stay great ...|     5|     4|\n|love monaco staff...|     5|     5|\n|cozy stay rainy c...|     5|     6|\n|excellent staff h...|     4|     7|\n|hotel stayed hote...|     5|     8|\n|excellent stayed ...|     5|     9|\n|poor value stayed...|     2|    10|\n|nice value seattl...|     4|    11|\n|nice hotel good l...|     4|    12|\n|nice hotel not ni...|     3|    13|\n|great hotel night...|     4|    14|\n|horrible customer...|     1|    15|\n|disappointed say ...|     2|    16|\n|fantastic stay mo...|     5|    17|\n|good choice hotel...|     5|    18|\n|hmmmmm say really...|     3|    19|\n+--------------------+------+------+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mrawDf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [Review: string, Rating: int]\n\u001b[1m\u001b[34mreviewCol\u001b[0m: \u001b[1m\u001b[32mString\u001b[0m = Review\n\u001b[1m\u001b[34mprocessedDf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [Review: string, Rating: int ... 1 more field]\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=3",
+              "$$hashKey": "object:5505"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637963324797_467659637",
+      "id": "paragraph_1637963324797_467659637",
+      "dateCreated": "2021-11-26T21:48:44+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:783",
+      "text": "val termsDf = processedDf.withColumn(\"term\", explode(split(col(reviewCol), \" \")))\ntermsDf.show",
+      "dateUpdated": "2021-11-26T23:29:44+0000",
+      "dateFinished": "2021-11-26T23:29:54+0000",
+      "dateStarted": "2021-11-26T23:29:50+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+--------------------+------+------+-----------+\n|              Review|Rating|doc_id|       term|\n+--------------------+------+------+-----------+\n|nice hotel expens...|     4|     0|       nice|\n|nice hotel expens...|     4|     0|      hotel|\n|nice hotel expens...|     4|     0|  expensive|\n|nice hotel expens...|     4|     0|    parking|\n|nice hotel expens...|     4|     0|        got|\n|nice hotel expens...|     4|     0|       good|\n|nice hotel expens...|     4|     0|       deal|\n|nice hotel expens...|     4|     0|       stay|\n|nice hotel expens...|     4|     0|      hotel|\n|nice hotel expens...|     4|     0|anniversary|\n|nice hotel expens...|     4|     0|    arrived|\n|nice hotel expens...|     4|     0|       late|\n|nice hotel expens...|     4|     0|    evening|\n|nice hotel expens...|     4|     0|       took|\n|nice hotel expens...|     4|     0|     advice|\n|nice hotel expens...|     4|     0|   previous|\n|nice hotel expens...|     4|     0|    reviews|\n|nice hotel expens...|     4|     0|        did|\n|nice hotel expens...|     4|     0|      valet|\n|nice hotel expens...|     4|     0|    parking|\n+--------------------+------+------+-----------+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mtermsDf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [Review: string, Rating: int ... 2 more fields]\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=4",
+              "$$hashKey": "object:5552"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637969131945_692196589",
+      "id": "paragraph_1637969131945_692196589",
+      "dateCreated": "2021-11-26T23:25:31+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:4668",
+      "text": "var tf = termsDf.groupBy(\"doc_id\", \"term\").agg(count(reviewCol) as \"tf\")\ntf.show",
+      "dateUpdated": "2021-11-26T23:29:46+0000",
+      "dateFinished": "2021-11-26T23:29:57+0000",
+      "dateStarted": "2021-11-26T23:29:53+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------+----------+---+\n|doc_id|      term| tf|\n+------+----------+---+\n|     0|      room|  3|\n|     1|    better|  2|\n|     6|attractive|  1|\n|     6|  positive|  1|\n|     7| concierge|  2|\n|    10|        nt|  2|\n|    12|     clean|  1|\n|    12|   concert|  1|\n|    15|      stay|  2|\n|    16|      desk|  6|\n|    19|       bed|  1|\n|    30| excellent|  1|\n|    32|    really|  1|\n|    44| cringeshe|  1|\n|    46|      mind|  1|\n|    51|    pretty|  1|\n|    52|     steer|  1|\n|    54|     tacky|  1|\n|    58|   staying|  1|\n|    63|       etc|  1|\n+------+----------+---+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mtf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [doc_id: bigint, term: string ... 1 more field]\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=5",
+              "$$hashKey": "object:5593"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637963817015_1846189111",
+      "id": "paragraph_1637963817015_1846189111",
+      "dateCreated": "2021-11-26T21:56:57+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:1557",
+      "text": "var df = tf.groupBy(\"term\").agg(countDistinct(\"doc_id\") as \"df\").orderBy(desc(\"df\")).limit(100)\ndf.show",
+      "dateUpdated": "2021-11-26T23:29:47+0000",
+      "dateFinished": "2021-11-26T23:30:06+0000",
+      "dateStarted": "2021-11-26T23:29:54+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+---------+-----+\n|     term|   df|\n+---------+-----+\n|    hotel|16321|\n|     room|14053|\n|      not|12123|\n|    staff|11522|\n|    great|11020|\n|     stay|10095|\n|     good| 9277|\n|   stayed| 8549|\n|       nt| 8379|\n|    rooms| 8338|\n| location| 8165|\n|     just| 7736|\n|    clean| 7649|\n|     nice| 7416|\n|      did| 7204|\n|breakfast| 7111|\n|       no| 6809|\n|    night| 6331|\n|  service| 6228|\n|     time| 6155|\n+---------+-----+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [term: string, df: bigint]\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=6",
+              "$$hashKey": "object:5641"
+            },
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=7",
+              "$$hashKey": "object:5642"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637968067610_533477621",
+      "id": "paragraph_1637968067610_533477621",
+      "dateCreated": "2021-11-26T23:07:47+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:3202",
+      "text": "val tfIdf = tf.join(df, Seq(\"term\"), \"right\").withColumn(\"tf_idf\", col(\"tf\") / col(\"df\")).cache()\ntfIdf.show",
+      "dateUpdated": "2021-11-26T23:29:49+0000",
+      "dateFinished": "2021-11-26T23:30:22+0000",
+      "dateStarted": "2021-11-26T23:29:57+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+------+-----------+---+----+--------------------+\n|  term|     doc_id| tf|  df|              tf_idf|\n+------+-----------+---+----+--------------------+\n|nights|       2962|  1|3871|2.583311805734952E-4|\n|nights|       3456|  1|3871|2.583311805734952E-4|\n|nights|       4605|  2|3871|5.166623611469904E-4|\n|nights|       4687|  1|3871|2.583311805734952E-4|\n|nights|       4947|  1|3871|2.583311805734952E-4|\n|nights| 8589935076|  1|3871|2.583311805734952E-4|\n|nights| 8589936667|  1|3871|2.583311805734952E-4|\n|nights| 8589936771|  1|3871|2.583311805734952E-4|\n|nights| 8589937193|  1|3871|2.583311805734952E-4|\n|nights| 8589938066|  1|3871|2.583311805734952E-4|\n|nights| 8589938119|  1|3871|2.583311805734952E-4|\n|nights|17179873949|  1|3871|2.583311805734952E-4|\n|nights|25769804985|  1|3871|2.583311805734952E-4|\n|nights|25769805776|  1|3871|2.583311805734952E-4|\n|nights|25769806427|  1|3871|2.583311805734952E-4|\n|nights|        793|  1|3871|2.583311805734952E-4|\n|nights|        837|  1|3871|2.583311805734952E-4|\n|nights|       1596|  1|3871|2.583311805734952E-4|\n|nights|       1778|  1|3871|2.583311805734952E-4|\n|nights|       2167|  1|3871|2.583311805734952E-4|\n+------+-----------+---+----+--------------------+\nonly showing top 20 rows\n\n\u001b[1m\u001b[34mtfIdf\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.Dataset[org.apache.spark.sql.Row]\u001b[0m = [term: string, doc_id: bigint ... 3 more fields]\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=8",
+              "$$hashKey": "object:5809"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637966936623_976705056",
+      "id": "paragraph_1637966936623_976705056",
+      "dateCreated": "2021-11-26T22:48:56+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:2401",
+      "text": "val pivoted = tfIdf.groupBy(\"doc_id\").pivot(\"term\").sum(\"tf_idf\")",
+      "dateUpdated": "2021-11-26T23:30:32+0000",
+      "dateFinished": "2021-11-26T23:30:36+0000",
+      "dateStarted": "2021-11-26T23:30:32+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "\u001b[1m\u001b[34mpivoted\u001b[0m: \u001b[1m\u001b[32morg.apache.spark.sql.DataFrame\u001b[0m = [doc_id: bigint, 2: double ... 99 more fields]\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/scala",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {
+        "jobUrl": {
+          "propertyName": "jobUrl",
+          "label": "SPARK JOB",
+          "tooltip": "View in Spark web UI",
+          "group": "spark",
+          "values": [
+            {
+              "jobUrl": "http://b8d71119d7ec:4040/jobs/job?id=9",
+              "$$hashKey": "object:5847"
+            }
+          ],
+          "interpreterSettingId": "spark"
+        }
+      },
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637968146838_1835747748",
+      "id": "paragraph_1637968146838_1835747748",
+      "dateCreated": "2021-11-26T23:09:06+0000",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:3335",
+      "text": "pivoted.show",
+      "dateUpdated": "2021-11-26T23:30:35+0000",
+      "dateFinished": "2021-11-26T23:30:39+0000",
+      "dateStarted": "2021-11-26T23:30:35+0000",
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "+-----------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+----+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-----+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+-------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+\n|     doc_id|                   2|                   3|                   4|                   5|                area|             arrived|                away|                 bar|            bathroom|               beach|           beautiful|                 bed|beds|                best|              better|                big|                 bit|              booked|           breakfast|              buffet|                city|               clean|               close|         comfortable|                 day|               days|          definitely|                desk|                 did|           excellent|          experience|           fantastic|               floor|                food|                free|            friendly|going|                good|                 got|               great|             helpful|               hotel|              hotels|                just|               large|                like|              little|               lobby|            location|               loved|              lovely|                make|             minutes|             morning|                need|                 new|                nice|              night|              nights|                 no|                 not|                  nt|              people|            perfect|               place|                pool|               price|             problem|              quiet|               quite|              really|           recommend|              resort|          restaurant|         restaurants|             reviews|               right|                room|               rooms|                 say|             service|              shower|               small|               staff|                stay|              stayed|              street|               think|                time|               times|                took|                trip|                view|                walk|             walking|               want|               water|                 way|                went|           wonderful|\n+-----------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+----+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-----+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+-------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+\n|17179873493|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|null|2.345215759849906...|                null|               null|                null|3.152585119798234...|                null|                null|                null|                null|                null|                null|                null|               null|3.699593044765076E-4|                null|                null|                null|                null|4.284490145672665E-4|                null|                null|                null|                null| null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|1.224739742804654E-4|                null|                null|                null|                null|                null|                null|                null|                null|               null|2.583311805734952E-4|               null|                null|                null|                null|               null|                null|                null|                null|                null|               null|                null|                null|2.358490566037736E-4|                null|2.708559046587215...|2.593360995850622...|                null|                null|                null|1.199328376109378...|                null|1.605651894669235...|                null|                null|8.679048776254123E-5|1.981178801386825...|1.169727453503333...|                null|                null|                null|                null|                null|                null|                null|                null|                null|               null|                null|3.106554830692761...|3.145643284051588...|                null|\n| 8589939750|2.586652871184687E-4|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|null|                null|                null|               null|                null|                null|1.406271972999578E-4|                null|3.388681802778719...|                null|                null|                null|                null|               null|                null|                null| 2.77623542476402E-4|2.261931689662972...|                null|                null|                null|                null|                null|                null| null|1.077934677158564...|                null|9.074410163339382E-5|3.959611958028113E-4|2.450830218736597...|                null|                null|                null|                null|2.270663033605812...|                null|                null|                null|8.771929824561404E-4|                null|                null|                null|                null|                null|                null|1.57952930026852E-4|2.583311805734952E-4|               null|                null|3.580379520229144...|                null|               null|1.881113619262603...|                null|                null|                null|4.07000407000407E-4|                null|                null|                null|                null|                null|                null|                null|3.013863773357444E-4| 7.11591830925781E-5|                null|                null|                null|4.370629370629370...|                null|1.735809755250824...|9.905894006934126E-5|1.169727453503333...|                null|                null|                null|                null|                null|                null|                null|                null|                null|               null|                null|                null|                null|                null|\n| 8589939171|2.586652871184687E-4|                null|                null|                null|                null|                null|                null|                null|2.350728725905030...|                null|2.944640753828033E-4|2.647603918453799...|null|                null|                null|               null|6.754474839581223E-4|                null|1.406271972999578E-4|                null|                null|                null|                null|                null|                null|               null|                null|                null| 2.77623542476402E-4|                null|3.783579265985622...|                null|                null|                null|                null|                null| null|1.077934677158564...|                null|                null|                null|1.838122664052447...|                null|3.877973112719751...|3.396739130434782...|                null|2.270663033605812...|                null|1.224739742804654E-4|                null|                null|                null|                null|                null|                null|                null|                null|3.15905860053704E-4|2.583311805734952E-4|               null|                null|1.193459840076381...|                null|4.23908435777872E-4|                null|                null|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|                null|2.134775492777343E-4|                null|                null|                null|                null|                null|                null|                null|1.169727453503333...|                null|4.268032437046522E-4|                null|                null|                null|                null|                null|                null|                null|               null|                null|                null|3.145643284051588...|                null|\n|25769806291|                null|                null|                null|3.010234798314268...|2.409638554216867...|                null|                null|                null|                null|                null|                null|                null|null|4.690431519699812...|                null|               null|                null|                null|                null|                null|3.388681802778719...|                null|                null|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|                null|                null|1.713796058269065...| null|                null|                null|9.074410163339382E-5|                null|2.450830218736597...|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|               null|2.583311805734952E-4|               null|2.474634991338777...|                null|                null|               null|1.881113619262603...|                null|                null|                null|               null|                null|                null|2.358490566037736E-4|                null|                null|                null|                null|                null|                null|                null|                null|1.605651894669235...|                null|                null|8.679048776254123E-5|2.971768202080237...|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|               null|                null|3.106554830692761...|                null|                null|\n|       2250|                null|                null|                null|                null|                null|                null|                null|                null|2.350728725905030...|                null|                null|                null|null|4.690431519699812...|                null|               null|3.377237419790611...|                null|                null|                null|                null|                null|7.202016564638099E-4|                null|                null|               null|                null|3.134796238244514...| 1.38811771238201E-4|                null|3.783579265985622...|                null|2.907822041291073E-4|                null|3.262642740619902E-4|                null| null|                null|                null|1.814882032667876...|1.979805979014056...|4.288952882789045E-4|3.078817733990148E-4|                null|                null|                null|                null|                null|1.224739742804654E-4|                null|                null|                null|                null|                null|                null|                null|                null|3.15905860053704E-4|2.583311805734952E-4|1.46864444118079E-4|2.474634991338777...|1.193459840076381...|2.424830261881668...|               null|3.762227238525207E-4|                null|                null|                null|               null|7.437709185570844E-4|                null|2.358490566037736E-4|                null|2.708559046587215...|2.593360995850622...|                null|                null|                null|1.199328376109378...|                null|8.028259473346178E-4|                null|                null|8.679048776254123E-5|                null|2.339454907006667...|                null|                null|                null|                null|                null|                null|                null|                null|                null|               null|                null|                null|                null|                null|\n| 8589935183|2.586652871184687E-4|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|null|                null|                null|               null|                null|                null|                null|                null|                null|1.307360439273107...|                null|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null| null|2.155869354317128...|2.402691013935608E-4|9.074410163339382E-5|                null|1.225415109368298...|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|4.201680672268908E-4|                null|1.348435814455231...|               null|2.583311805734952E-4|               null|                null|                null|                null|               null|                null|                null|3.310162197947699...|                null|               null|                null|                null|                null|                null|                null|                null|                null|3.013863773357444E-4| 7.11591830925781E-5|1.199328376109378...|                null|                null|                null|                null|8.679048776254123E-5|                null|1.169727453503333...|                null|                null|                null|                null|                null|2.781641168289291E-4|2.923976608187134...|                null|                null|               null|                null|                null|                null|3.292723081988804...|\n|17179870614|                null|                null|3.831417624521073E-4|                null|4.819277108433734...|                null|                null|5.715918833952558E-4|                null|                null|                null|                null|null|                null|                null|               null|                null|                null|2.812543945999156E-4|                null|                null|                null|                null|2.608922515001304...|5.288207297726071E-4|3.68052999631947E-4|7.399186089530152E-4|3.134796238244514...| 9.71682398667407E-4|                null|                null|                null|                null|3.656307129798903...|3.262642740619902E-4|                null| null|                null|4.805382027871216E-4| 5.44464609800363E-4|                null|1.225415109368298...|6.157635467980296E-4|7.755946225439503E-4|3.396739130434782...|1.877229209686502...|                null|3.933910306845004E-4|1.224739742804654E-4|                null|                null|                null|                null|                null|                null|                null|2.696871628910463...|1.57952930026852E-4|2.583311805734952E-4|1.46864444118079E-4|2.474634991338777...|0.001312805824084...|                null|               null|                null|                null|3.310162197947699...|                null|               null|3.718854592785422E-4|                null|                null|                null|5.417118093174431E-4|                null|                null|                null| 7.11591830925781E-4|1.199328376109378...|0.001059322033898305|                null|                null|                null|2.603714632876236...|9.905894006934126E-5|2.339454907006667...|3.611412062116287...|8.536064874093043E-4|3.249390739236393E-4|                null|4.361098996947231E-4|2.781641168289291E-4|0.001461988304093...|                null|3.895597974289053...|3.18775900541919E-4|3.305785123966942...|                null|                null|9.878169245966415E-4|\n|25769805484|                null|                null|                null|                null|                null|                null|3.106554830692761...|                null|2.350728725905030...|                null|                null|2.647603918453799...|null|                null|                null|               null|                null|                null|                null|                null|                null|1.307360439273107...|                null|                null|                null|               null|                null|                null| 1.38811771238201E-4|                null|                null|                null|                null|                null|3.262642740619902E-4|1.713796058269065...| null|                null|                null|1.814882032667876...|1.979805979014056...|1.225415109368298...|                null|                null|                null|                null|2.270663033605812...|3.933910306845004E-4|                null|                null|                null|                null|3.673769287288758E-4|                null|                null|                null|                null|               null|2.583311805734952E-4|               null|                null|2.386919680152762...|                null|               null|1.881113619262603...|                null|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|                null|1.423183661851562E-4|                null|                null|                null|4.370629370629370...|                null|8.679048776254123E-5|1.981178801386825...|1.169727453503333...|3.611412062116287...|                null|                null|                null|                null|                null|                null|                null|                null|               null|                null|                null|                null|                null|\n|       2927|2.586652871184687E-4|8.888888888888889E-4|7.662835249042146E-4|0.001505117399157...|7.228915662650603E-4|                null|6.213109661385523E-4|2.857959416976279E-4|                null|0.002563445270443476|0.001177856301531213|                null|null|4.690431519699812...|6.169031462060457E-4|               null|                null|                null|4.218815918998734...|0.002363135092556...|                null|1.307360439273107...|3.601008282319049...|                null|1.762735765908690...|               null|3.699593044765076E-4|                null|0.001249305941143809|4.523863379325944...|3.783579265985622...|4.284490145672665E-4|2.907822041291073E-4|0.001096892138939...|9.787928221859706E-4|1.713796058269065...| null|2.155869354317128...|                null|3.629764065335753E-4|                null|6.739783101525642E-4|3.078817733990148E-4|1.292657704239917...|6.793478260869565E-4|0.001314060446780552|0.001362397820163...|0.001180173092053...|                null|0.001585414189456...|                null|3.256268316509280...|0.001102130786186...|3.866976024748647E-4|                null|                null|1.348435814455231...|4.73858790080556E-4|5.166623611469904E-4|2.93728888236158E-4|4.124391652231295...|0.001074113856068...|0.001212415130940...|               null|0.001693002257336343|5.005005005005005E-4|                null|4.363001745200698E-4|4.07000407000407E-4|0.001859427296392711|                null|2.358490566037736E-4|0.001079913606911...|0.001354279523293...|7.780082987551867E-4|9.721322099805574E-4|3.013863773357444E-4|2.134775492777343E-4|1.199328376109378...|7.062146892655367E-4|8.028259473346178E-4|8.741258741258741E-4|                null|3.471619510501649E-4|                null|                null|                null|                null|6.498781478472786E-4|                null|8.722197993894462E-4|                null|                null|4.309416074121956...|                null|               null|0.001652892561983471|3.106554830692761...|0.001258257313620...|3.292723081988804...|\n|17179874016|                null|2.962962962962963E-4|                null|3.010234798314268...|                null|                null|                null|                null|                null|                null|                null|                null|null|                null|                null|               null|                null|                null|                null|                null|                null|1.307360439273107...|                null|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null| null|1.077934677158564...|                null|                null|                null|1.838122664052447...|                null|1.292657704239917...|6.793478260869565E-4|                null|                null|3.933910306845004E-4|2.449479485609308E-4|                null|                null|                null|                null|                null|                null|                null|2.696871628910463...|               null|2.583311805734952E-4|               null|                null|                null|                null|               null|                null|                null|                null|                null|4.07000407000407E-4|                null|                null|                null|                null|                null|                null|                null|3.013863773357444E-4|1.423183661851562E-4|                null|                null|                null|                null|                null|                null|                null|1.169727453503333...|                null|                null|                null|                null|4.361098996947231E-4|                null|2.923976608187134...|4.309416074121956...|                null|               null|                null|                null|                null|3.292723081988804...|\n| 8589939543|2.586652871184687E-4|                null|                null|                null|                null|                null|                null|2.857959416976279E-4|                null|                null|                null|                null|null|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|                null|1.762735765908690...|               null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null| null|1.077934677158564...|                null|9.074410163339382E-5|                null|6.127075546841493E-5|                null|                null|                null|                null|2.270663033605812...|                null|1.224739742804654E-4|                null|                null|                null|3.673769287288758E-4|                null|                null|                null|                null|               null|2.583311805734952E-4|1.46864444118079E-4|                null|                null|                null|4.23908435777872E-4|                null|                null|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|                null| 7.11591830925781E-5|                null|                null|                null|                null|                null|8.679048776254123E-5|                null|1.169727453503333...|                null|                null|1.624695369618196...|                null|                null|                null|                null|2.154708037060978...|                null|               null|                null|                null|                null|                null|\n| 8589939836|                null|                null|3.831417624521073E-4|                null|2.409638554216867...|                null|                null|                null|2.350728725905030...|                null|                null|                null|null|                null|                null|               null|                null|                null|1.406271972999578E-4|                null|                null|1.307360439273107...|                null|                null|                null|               null|                null|                null| 1.38811771238201E-4|2.261931689662972...|                null|4.284490145672665E-4|                null|                null|3.262642740619902E-4|                null| null|1.077934677158564...|                null|9.074410163339382E-5|                null|5.514367992157344E-4|                null| 5.17063081695967E-4|                null|                null|                null|                null|1.224739742804654E-4|                null|                null|                null|3.673769287288758E-4|                null|                null|                null|                null|               null|2.583311805734952E-4|               null|1.649756660892518...|                null|                null|               null|1.881113619262603...|                null|                null|                null|               null|                null|                null|                null|                null|                null|                null|3.240440699935191E-4|3.013863773357444E-4|                null|1.199328376109378...|                null|                null|4.370629370629370...|                null|8.679048776254123E-5|1.981178801386825...|1.169727453503333...|3.611412062116287...|                null|                null|                null|4.361098996947231E-4|                null|                null|4.309416074121956...|                null|               null|                null|3.106554830692761...|                null|                null|\n| 8589939696|                null|                null|3.831417624521073E-4|                null|                null|                null|                null|                null|2.350728725905030...|                null|                null|2.647603918453799...|null|                null|                null|               null|6.754474839581223E-4|                null|                null|                null|                null|                null|                null|                null|                null|               null|                null|                null| 1.38811771238201E-4|                null|                null|                null|                null|                null|                null|                null| null|1.077934677158564...|                null|                null|                null|1.838122664052447...|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|2.696871628910463...|               null|2.583311805734952E-4|2.93728888236158E-4|1.649756660892518...|2.386919680152762...|                null|               null|3.762227238525207E-4|                null|                null|                null|               null|                null|4.096681687832855...|                null|                null|                null|                null|                null|                null| 7.11591830925781E-5|                null|                null|                null|                null|                null|                null|1.981178801386825...|3.509182360510001E-4|                null|4.268032437046522E-4|1.624695369618196...|                null|                null|                null|                null|                null|                null|               null|                null|                null|                null|                null|\n| 8589936972|                null|                null|3.831417624521073E-4|                null|2.409638554216867...|4.192872117400419E-4|                null|                null|                null|                null|2.944640753828033E-4|                null|null|                null|                null|               null|                null|                null|1.406271972999578E-4|                null|0.001016604540833...|1.307360439273107...|3.601008282319049...|                null|1.762735765908690...|               null|                null|                null| 2.77623542476402E-4|                null|                null|                null|8.723466123873219E-4|                null|3.262642740619902E-4|                null| null|                null|                null|1.814882032667876...|                null|1.838122664052447...|                null|                null|                null|                null|4.541326067211625...|                null|2.449479485609308E-4|3.963535473642489...|                null|                null|                null|                null|                null|                null|                null|               null|2.583311805734952E-4|1.46864444118079E-4|                null|3.580379520229144...|                null|               null|                null|                null|                null|4.363001745200698E-4|4.07000407000407E-4|                null|2.048340843916427...|                null|                null|                null|                null|3.240440699935191E-4|                null|1.423183661851562E-4|3.597985128328136...|                null|                null|                null|2.063983488132095E-4|                null|9.905894006934126E-5|1.169727453503333...|3.611412062116287...|                null|1.624695369618196...|                null|                null|                null|                null|                null|3.895597974289053...|               null|                null|                null|                null|3.292723081988804...|\n|       4590|                null|                null|                null|0.002408187838651415|                null|                null|6.213109661385523E-4|                null|2.350728725905030...|                null|                null|                null|null|2.345215759849906...|3.084515731030228...|               null|                null|                null|                null|                null|                null|                null|                null|                null|                null|               null|                null|                null|                null|                null|3.783579265985622...|4.284490145672665E-4|                null|                null|                null|                null| null|1.077934677158564...|2.402691013935608E-4|                null|                null| 7.96519821089394E-4|3.078817733990148E-4|                null|                null|1.877229209686502...|                null|                null|                null|                null|                null|                null|                null|3.866976024748647E-4|                null|                null|                null|1.57952930026852E-4|5.166623611469904E-4|               null|2.474634991338777...|                null|                null|               null|                null|                null|6.620324395895399E-4|                null|               null|                null|4.096681687832855...|                null|                null|                null|                null|                null|                null|2.134775492777343E-4|1.199328376109378...|                null|3.211303789338471E-4|                null| 4.12796697626419E-4|2.603714632876236...|1.981178801386825...|                null|                null|                null|                null|                null|                null|                null|2.923976608187134...|                null|                null|               null|                null|                null|                null|                null|\n|25769804925|                null|                null|7.662835249042146E-4|6.020469596628537E-4|                null|4.192872117400419E-4|                null|                null|                null|5.126890540886952E-4|2.944640753828033E-4|                null|null|                null|3.084515731030228...|               null|                null|                null|                null|                null|                null|                null|                null|                null|1.762735765908690...|3.68052999631947E-4|                null|                null|                null|                null|                null|                null|                null|3.656307129798903...|                null|                null| null|2.155869354317128...|4.805382027871216E-4|9.074410163339382E-5|                null|1.838122664052447...|                null|1.292657704239917...|                null|3.754458419373005...|                null|                null|                null|                null|                null|0.001302507326603...|3.673769287288758E-4|3.866976024748647E-4|                null|3.808073115003808E-4|2.696871628910463...|               null|2.583311805734952E-4|               null|6.599026643570073E-4|2.386919680152762...|2.424830261881668...|               null|                null|                null|                null|4.363001745200698E-4|               null|                null|                null|                null|3.599712023038157E-4|                null|2.593360995850622...|                null|                null|1.423183661851562E-4|                null|3.531073446327683...|9.633911368015414E-4|                null|                null|8.679048776254123E-5|9.905894006934126E-5|1.169727453503333...|                null|                null|1.624695369618196...|                null|                null|                null|                null|2.154708037060978...|                null|3.18775900541919E-4|                null|3.106554830692761...|                null|                null|\n|       2214|                null|                null|                null|                null|4.819277108433734...|                null|                null|                null|                null|                null|                null|                null|null|                null|                null|               null|                null|                null|2.812543945999156E-4|                null|                null|1.307360439273107...|                null|                null|3.525471531817380...|               null|                null|9.404388714733542E-4| 1.38811771238201E-4|2.261931689662972...|                null|                null|                null|                null|6.525285481239804E-4|                null| null|2.155869354317128...|                null|                null|1.979805979014056...|1.838122664052447...|                null|2.585315408479835E-4|3.396739130434782...|                null|                null|3.933910306845004E-4|3.674219228413962...|                null|                null|                null|7.347538574577516E-4|                null|                null|                null|                null|1.57952930026852E-4|                null|2.93728888236158E-4|                null|4.773839360305525...|4.849660523763336...|               null|                null|                null|6.620324395895399E-4|                null|               null|                null|                null|                null|                null|                null|2.593360995850622...|                null|6.027727546714888E-4| 7.11591830925781E-5|                null|                null|1.605651894669235...|                null|                null|1.735809755250824...|1.981178801386825...|                null|3.611412062116287...|                null|1.624695369618196...|                null|                null|                null|                null|                null|                null|               null|                null|                null|                null|                null|\n| 8589935298|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|null|                null|                null|4.07000407000407E-4|                null|                null|                null|                null|                null|                null|                null|                null|                null|               null|3.699593044765076E-4|                null|                null|                null|                null|                null|                null|                null|3.262642740619902E-4|1.713796058269065...| null|                null|                null|1.814882032667876...|                null|6.127075546841493E-5|                null|                null|                null|                null|                null|                null|1.224739742804654E-4|                null|                null|                null|                null|3.866976024748647E-4|                null|                null|                null|               null|                null|               null|                null|                null|                null|               null|1.881113619262603...|                null|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|                null|                null|1.199328376109378...|                null|                null|                null|                null|8.679048776254123E-5|1.981178801386825...|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|               null|                null|                null|                null|3.292723081988804...|\n| 8589935171|0.001293326435592...|2.962962962962963E-4|                null|                null|                null|                null|                null|                null|2.350728725905030...|2.563445270443476E-4|2.944640753828033E-4|2.647603918453799...|null|                null|                null|               null|3.377237419790611...|                null|                null|                null|                null|1.307360439273107...|                null|                null|1.762735765908690...|               null|                null|6.269592476489029E-4|                null|                null|                null|                null|2.907822041291073E-4|                null|3.262642740619902E-4|1.713796058269065...| null|                null|                null|1.814882032667876...|                null|6.127075546841493E-5|                null|1.292657704239917...|6.793478260869565E-4|1.877229209686502...|                null|3.933910306845004E-4|1.224739742804654E-4|                null|4.385964912280702E-4|                null|                null|                null|                null|3.808073115003808E-4|4.045307443365696E-4|               null|                null|1.46864444118079E-4|1.649756660892518...|                null|                null|               null|                null|5.005005005005005E-4|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|                null|2.846367323703124E-4|                null|                null|                null|8.741258741258741E-4| 4.12796697626419E-4|8.679048776254123E-5|9.905894006934126E-5|2.339454907006667...|3.611412062116287...|                null|                null|4.464285714285714E-4|                null|                null|                null|2.154708037060978...|                null|               null|                null|                null|                null|9.878169245966415E-4|\n|17179870343|                null|                null|                null|                null|                null|                null|                null|                null|                null|5.126890540886952E-4|2.944640753828033E-4|                null|null|2.345215759849906...|                null|               null|                null|                null|                null|                null|                null|1.307360439273107...|                null|                null|                null|               null|                null|                null|                null|                null|                null|                null|                null|1.828153564899451...|                null|1.713796058269065...| null|2.155869354317128...|                null|9.074410163339382E-5|1.979805979014056...|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|                null|3.866976024748647E-4|                null|                null|                null|               null|                null|1.46864444118079E-4|                null|1.193459840076381...|                null|               null|                null|                null|3.310162197947699...|                null|               null|                null|                null|                null|3.599712023038157E-4|                null|                null|                null|                null|                null|1.199328376109378...|3.531073446327683...|                null|                null|                null|8.679048776254123E-5|9.905894006934126E-5|1.169727453503333...|                null|4.268032437046522E-4|                null|                null|                null|                null|                null|                null|                null|               null|                null|                null|                null|                null|\n+-----------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+----+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-----+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+-------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+-------------------+--------------------+--------------------+--------------------+--------------------+\nonly showing top 20 rows\n\n"
+          }
+        ]
+      }
+    },
+    {
+      "user": "anonymous",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "scala",
+          "editOnDblClick": false,
+          "completionKey": "TAB",
+          "completionSupport": true
+        },
+        "editorMode": "ace/mode/scala"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1637969435804_825630168",
+      "id": "paragraph_1637969435804_825630168",
+      "dateCreated": "2021-11-26T23:30:35+0000",
+      "status": "READY",
+      "focus": true,
+      "$$hashKey": "object:5724"
+    }
+  ],
+  "name": "tfidf",
+  "id": "2GN3NJ9PS",
+  "defaultInterpreterGroup": "spark",
+  "version": "0.10.0",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {},
+  "path": "/tfidf"
+}
